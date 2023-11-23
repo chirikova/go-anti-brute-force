@@ -1,0 +1,27 @@
+dist: bionic
+
+language: go
+
+go:
+  - 1.21.x
+
+os:
+  - linux
+
+git:
+  depth: 1
+  quiet: true
+  submodules: false
+
+install: true
+
+notifications:
+  email: false
+
+env:
+  global:
+    - GO111MODULE=on
+
+script:
+  - make lint
+  - make test

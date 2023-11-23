@@ -1,0 +1,20 @@
+logger:
+  level: INFO
+  outputPath: ./log/app.log
+
+grpc:
+  host: 127.0.0.1
+  port: 9095
+
+db:
+  host: 127.0.0.1
+  port: 5432
+  dbName: antibruteforce
+  user: antibruteforce
+  password: antibruteforce
+
+app:
+  login_retries: 10
+  pass_retries: 100
+  ip_retries: 1000
+  time_interval: 60
