@@ -1,3 +1,5 @@
+![GitHub CI](https://github.com/chirikova/go-anti-brute-force/actions/workflows/ci.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/chirikova/go-anti-brute-force)](https://goreportcard.com/report/github.com/chirikova/go-anti-brute-force)
 # Описание сервиса
 <!-- TOC -->
 * [Описание сервиса](#описание-сервиса)
