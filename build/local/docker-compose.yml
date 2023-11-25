@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: ./build/app/Dockerfile
+    ports:
+      - 9095:9095
+    networks:
+      - db
+    depends_on:
+      - psql
+    restart: on-failure
+  psql:
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=antibruteforce
+      - POSTGRES_PASSWORD=antibruteforce
+      - POSTGRES_DB=antibruteforce
+    ports:
+      - "54320:5432"
+    volumes:
+      - ../../build/migrations/:/docker-entrypoint-initdb.d/
+    networks:
+      - db
+networks:
+  db:
+    driver: bridge
