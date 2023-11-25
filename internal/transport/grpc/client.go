@@ -1,9 +1,9 @@
 package grpc
 
 import (
-	"antibruteforce/internal/transport/grpc/api"
 	"context"
 
+	"antibruteforce/internal/transport/grpc/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

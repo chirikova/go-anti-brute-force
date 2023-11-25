@@ -1,12 +1,12 @@
 package logger
 
 import (
-	"antibruteforce/internal/config"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 
+	"antibruteforce/internal/config"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -1,8 +1,9 @@
 package app
 
 import (
-	"antibruteforce/internal/logger"
 	"context"
+
+	"antibruteforce/internal/logger"
 )
 
 type Application interface {

@@ -1,10 +1,6 @@
 package main
 
 import (
-	"antibruteforce/internal/app"
-	"antibruteforce/internal/config"
-	"antibruteforce/internal/logger"
-	"antibruteforce/internal/transport/grpc"
 	"context"
 	"flag"
 	"log"
@@ -12,6 +8,11 @@ import (
 	"os/signal"
 	"sync"
 	"syscall"
+
+	"antibruteforce/internal/app"
+	"antibruteforce/internal/config"
+	"antibruteforce/internal/logger"
+	"antibruteforce/internal/transport/grpc"
 )
 
 var configFile string

@@ -1,10 +1,10 @@
 package logger
 
 import (
-	"antibruteforce/internal/config"
 	"bytes"
 	"testing"
 
+	"antibruteforce/internal/config"
 	"github.com/stretchr/testify/require"
 )
 

@@ -1,13 +1,13 @@
 package grpc
 
 import (
+	"context"
+	"net"
+
 	"antibruteforce/internal/app"
 	"antibruteforce/internal/config"
 	"antibruteforce/internal/logger"
 	"antibruteforce/internal/transport/grpc/api"
-	"context"
-	"net"
-
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
