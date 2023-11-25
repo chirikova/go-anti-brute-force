@@ -13,12 +13,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var address string
-var timeout time.Duration
+var (
+	address string
+	timeout time.Duration
+)
 
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
 
 	client, err := grpc.NewClient(ctx, address)
 	if err != nil {
@@ -65,7 +66,6 @@ func main() {
 					r := api.ResetRequest{Login: c.String("login"), Ip: c.String("ip")}
 					if response, err := client.Reset(ctx, &r); err != nil {
 						log.Println("Error: ", err)
-						return err
 					} else {
 						log.Printf("Response: %v\n", response)
 					}
@@ -98,7 +98,6 @@ func main() {
 					}
 					if response, err := client.WhitelistAdd(ctx, &r); err != nil {
 						log.Println("Error: ", err)
-						return err
 					} else {
 						log.Printf("Response: %v\n", response)
 					}
@@ -131,7 +130,6 @@ func main() {
 					}
 					if response, err := client.WhitelistRemove(ctx, &r); err != nil {
 						log.Println("Error: ", err)
-						return err
 					} else {
 						log.Printf("Response: %v\n", response)
 					}
@@ -164,7 +162,6 @@ func main() {
 					}
 					if response, err := client.BlacklistAdd(ctx, &r); err != nil {
 						log.Println("Error: ", err)
-						return err
 					} else {
 						log.Printf("Response: %v\n", response)
 					}
@@ -197,7 +194,6 @@ func main() {
 					}
 					if response, err := client.BlacklistRemove(ctx, &r); err != nil {
 						log.Println("Error: ", err)
-						return err
 					} else {
 						log.Printf("Response: %v\n", response)
 					}

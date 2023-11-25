@@ -6,10 +6,10 @@ import (
 	"antibruteforce/internal/logger"
 	"antibruteforce/internal/transport/grpc/api"
 	"context"
-	"google.golang.org/grpc/reflection"
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type Server struct {

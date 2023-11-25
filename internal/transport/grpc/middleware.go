@@ -3,14 +3,14 @@ package grpc
 import (
 	"context"
 	"fmt"
+	"time"
+
+	"antibruteforce/internal/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
-	"time"
-
-	"antibruteforce/internal/logger"
 )
 
 func loggingMiddleware(logger logger.Logger) grpc.UnaryServerInterceptor {
