@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 
-	"antibruteforce/internal/logger"
+	"github.com/chirikova/go-anti-brute-force/internal/logger"
 )
 
 type Application interface {

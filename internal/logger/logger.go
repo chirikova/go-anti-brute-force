@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"antibruteforce/internal/config"
+	"github.com/chirikova/go-anti-brute-force/internal/config"
 	log "github.com/sirupsen/logrus"
 )
 

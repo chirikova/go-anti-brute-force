@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 
-	"antibruteforce/internal/app"
-	"antibruteforce/internal/transport/grpc/api"
+	"github.com/chirikova/go-anti-brute-force/internal/app"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc/api"
 )
 
 type Service struct {

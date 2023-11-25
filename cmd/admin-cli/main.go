@@ -8,8 +8,8 @@ import (
 	"syscall"
 	"time"
 
-	"antibruteforce/internal/transport/grpc"
-	"antibruteforce/internal/transport/grpc/api"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc/api"
 	"github.com/urfave/cli/v2"
 )
 

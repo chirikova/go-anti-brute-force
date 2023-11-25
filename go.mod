@@ -1,4 +1,4 @@
-module antibruteforce
+module github.com/chirikova/go-anti-brute-force
 
 go 1.21
 

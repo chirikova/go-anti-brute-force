@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"antibruteforce/internal/logger"
+	"github.com/chirikova/go-anti-brute-force/internal/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"

@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 
-	"antibruteforce/internal/transport/grpc/api"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

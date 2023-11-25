@@ -4,10 +4,10 @@ import (
 	"context"
 	"net"
 
-	"antibruteforce/internal/app"
-	"antibruteforce/internal/config"
-	"antibruteforce/internal/logger"
-	"antibruteforce/internal/transport/grpc/api"
+	"github.com/chirikova/go-anti-brute-force/internal/app"
+	"github.com/chirikova/go-anti-brute-force/internal/config"
+	"github.com/chirikova/go-anti-brute-force/internal/logger"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

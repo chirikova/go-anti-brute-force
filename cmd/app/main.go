@@ -9,10 +9,10 @@ import (
 	"sync"
 	"syscall"
 
-	"antibruteforce/internal/app"
-	"antibruteforce/internal/config"
-	"antibruteforce/internal/logger"
-	"antibruteforce/internal/transport/grpc"
+	"github.com/chirikova/go-anti-brute-force/internal/app"
+	"github.com/chirikova/go-anti-brute-force/internal/config"
+	"github.com/chirikova/go-anti-brute-force/internal/logger"
+	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc"
 )
 
 var configFile string

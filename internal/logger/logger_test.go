@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"antibruteforce/internal/config"
+	"github.com/chirikova/go-anti-brute-force/internal/config"
 	"github.com/stretchr/testify/require"
 )
 
