@@ -1,9 +1,9 @@
 package grpc
 
 import (
-	"antibruteforce/internal/app"
 	"context"
 
+	"antibruteforce/internal/app"
 	"antibruteforce/internal/transport/grpc/api"
 )
 
@@ -18,31 +18,31 @@ func NewService(app *app.Application) *Service {
 	}
 }
 
-func (s *Service) Auth(ctx context.Context, request *api.AuthRequest) (*api.AuthResponse, error) {
+func (s *Service) Auth(_ context.Context, request *api.AuthRequest) (*api.AuthResponse, error) {
 	return &api.AuthResponse{}, nil
 }
 
-func (s *Service) Reset(ctx context.Context, request *api.ResetRequest) (*api.ResetResponse, error) {
+func (s *Service) Reset(_ context.Context, _ *api.ResetRequest) (*api.ResetResponse, error) {
 
 	return &api.ResetResponse{}, nil
 }
 
-func (s *Service) WhitelistAdd(ctx context.Context, request *api.WhitelistAddRequest) (*api.WhitelistAddResponse, error) {
+func (s *Service) WhitelistAdd(_ context.Context, _ *api.WhitelistAddRequest) (*api.WhitelistAddResponse, error) {
 
 	return &api.WhitelistAddResponse{}, nil
 }
 
-func (s *Service) WhitelistRemove(ctx context.Context, request *api.WhitelistRemoveRequest) (*api.WhitelistRemoveResponse, error) {
+func (s *Service) WhitelistRemove(ctx context.Context, request *api.WhitelistRemoveRequest) (*api.WhitelistRemoveResponse, error) { //nolint:all
 
 	return &api.WhitelistRemoveResponse{}, nil
 }
 
-func (s *Service) BlacklistAdd(ctx context.Context, request *api.BlacklistAddRequest) (*api.BlacklistAddResponse, error) {
+func (s *Service) BlacklistAdd(_ context.Context, _ *api.BlacklistAddRequest) (*api.BlacklistAddResponse, error) {
 
 	return &api.BlacklistAddResponse{}, nil
 }
 
-func (s *Service) BlacklistRemove(ctx context.Context, request *api.BlacklistRemoveRequest) (*api.BlacklistRemoveResponse, error) {
+func (s *Service) BlacklistRemove(_ context.Context, _ *api.BlacklistRemoveRequest) (*api.BlacklistRemoveResponse, error) { //nolint:all
 
 	return &api.BlacklistRemoveResponse{}, nil
 }
