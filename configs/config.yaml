@@ -3,18 +3,23 @@ logger:
   outputPath: ./log/app.log
 
 grpc:
-  host: 127.0.0.1
+  host: 0.0.0.0
   port: 9095
 
 db:
-  host: 127.0.0.1
+  host: psql
   port: 5432
   dbName: antibruteforce
   user: antibruteforce
   password: antibruteforce
 
-app:
-  login_retries: 10
-  pass_retries: 100
-  ip_retries: 1000
-  time_interval: 60
+limiter:
+  login:
+    limit: 10
+    interval: 60s
+  pass:
+    limit: 100
+    interval: 60s
+  ip:
+    limit: 1000
+    interval: 60s
