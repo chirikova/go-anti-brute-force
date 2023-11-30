@@ -12,6 +12,7 @@ import (
 	"github.com/chirikova/go-anti-brute-force/internal/app"
 	"github.com/chirikova/go-anti-brute-force/internal/config"
 	"github.com/chirikova/go-anti-brute-force/internal/logger"
+	sqlstorage "github.com/chirikova/go-anti-brute-force/internal/storage/sql"
 	"github.com/chirikova/go-anti-brute-force/internal/transport/grpc"
 )
 
@@ -22,11 +23,13 @@ func init() {
 }
 
 func main() {
+	// инициализируем конфиги
 	cfg, err := config.InitConfig(configFile)
 	if err != nil {
 		log.Fatalf("parsing config file %s: %s", configFile, err)
 	}
 
+	// инициализируем логгер
 	file, err := logger.GetLogFile(cfg.Logger.OutputPath)
 	if err != nil {
 		log.Fatalf("error opening file to log %s", err)
@@ -37,12 +40,27 @@ func main() {
 		log.Fatalf("init logger: %s", err)
 	}
 
+	// инициализируем context
 	ctx, cancel := signal.NotifyContext(context.Background(),
 		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 
-	antibruteforceApp := app.NewApp(ctx, logg)
+	// инициализируем хранилище
+	storage, err := sqlstorage.New(ctx)
+	if err != nil {
+		log.Fatalf("unable to init sql storage: %s", err)
+	}
 
-	grpcServer := grpc.NewServer(ctx, cfg.GRPC, logg, &antibruteforceApp)
+	// подключаемся к хранилищу
+	err = storage.Connect(ctx, cfg.DB)
+	if err != nil {
+		log.Fatalf("unable to connect to sql storage: %s", err)
+	}
+
+	// инициализируем основной сервис
+	antibruteforceApp := app.NewApp(ctx, storage, cfg)
+
+	// инициализируем сервер grpc
+	grpcServer := grpc.NewServer(ctx, cfg.GRPC, logg, antibruteforceApp)
 
 	defer func(file *os.File) {
 		err = file.Close()

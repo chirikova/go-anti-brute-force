@@ -19,13 +19,16 @@ var (
 )
 
 func main() {
+	// инициализируем context
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 
+	// инициализируем клиента grpc
 	client, err := grpc.NewClient(ctx, address)
 	if err != nil {
 		log.Fatalf("unable to establish connection: %s", err)
 	}
 
+	// команды для интерфейса администрирования сервиса
 	app := &cli.App{
 		Name: "CLI admin panel",
 		Usage: `интерфейс для ручного администрирования сервиса. 
@@ -45,6 +48,7 @@ func main() {
 				Destination: &timeout,
 			},
 		},
+		// команда сброса бакетов лимитера
 		Commands: []*cli.Command{
 			{
 				Name:    "Reset",
@@ -58,7 +62,7 @@ func main() {
 					},
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 				},
@@ -73,6 +77,7 @@ func main() {
 					return nil
 				},
 			},
+			// команда добавления IP в белый список
 			{
 				Name:    "Add to whitelist",
 				Aliases: []string{"aw"},
@@ -80,12 +85,12 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 				},
@@ -105,6 +110,7 @@ func main() {
 					return nil
 				},
 			},
+			// команда удаления IP из белого списка
 			{
 				Name:    "Remove from whitelist",
 				Aliases: []string{"rw"},
@@ -112,12 +118,12 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 				},
@@ -137,6 +143,7 @@ func main() {
 					return nil
 				},
 			},
+			// команда добавления IP в черный список
 			{
 				Name:    "Add to blacklist",
 				Aliases: []string{"ab"},
@@ -144,12 +151,12 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 				},
@@ -169,6 +176,7 @@ func main() {
 					return nil
 				},
 			},
+			// команда удаления IP из черного списка
 			{
 				Name:    "Remove from blacklist",
 				Aliases: []string{"rb"},
@@ -176,12 +184,12 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 					&cli.StringFlag{
 						Name:     "ip",
-						Usage:    "Ip, e.g.: 192.168.0.1",
+						Usage:    "IP, e.g.: 192.168.0.1",
 						Required: true,
 					},
 				},
@@ -204,6 +212,7 @@ func main() {
 		},
 	}
 
+	// инициализируем команды
 	err = app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
