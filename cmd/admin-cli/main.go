@@ -19,10 +19,8 @@ var (
 )
 
 func main() {
-	// инициализируем context
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 
-	// инициализируем клиента grpc
 	client, err := grpc.NewClient(ctx, address)
 	if err != nil {
 		log.Fatalf("unable to establish connection: %s", err)
@@ -67,14 +65,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					r := api.ResetRequest{Login: c.String("login"), Ip: c.String("ip")}
-					if response, err := client.Reset(ctx, &r); err != nil {
-						log.Println("Error: ", err)
-					} else {
-						log.Printf("Response: %v\n", response)
-					}
-
-					return nil
+					return cliReset(ctx, client, c)
 				},
 			},
 			// команда добавления IP в белый список
@@ -95,19 +86,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					r := api.WhitelistAddRequest{
-						SubNet: &api.SubNet{
-							Ip:   c.String("ip"),
-							Mask: c.String("mask"),
-						},
-					}
-					if response, err := client.WhitelistAdd(ctx, &r); err != nil {
-						log.Println("Error: ", err)
-					} else {
-						log.Printf("Response: %v\n", response)
-					}
-
-					return nil
+					return cliWhitelistAdd(ctx, client, c)
 				},
 			},
 			// команда удаления IP из белого списка
@@ -128,19 +107,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					r := api.WhitelistRemoveRequest{
-						SubNet: &api.SubNet{
-							Ip:   c.String("ip"),
-							Mask: c.String("mask"),
-						},
-					}
-					if response, err := client.WhitelistRemove(ctx, &r); err != nil {
-						log.Println("Error: ", err)
-					} else {
-						log.Printf("Response: %v\n", response)
-					}
-
-					return nil
+					return cliWhitelistRemove(ctx, client, c)
 				},
 			},
 			// команда добавления IP в черный список
@@ -161,19 +128,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					r := api.BlacklistAddRequest{
-						SubNet: &api.SubNet{
-							Ip:   c.String("ip"),
-							Mask: c.String("mask"),
-						},
-					}
-					if response, err := client.BlacklistAdd(ctx, &r); err != nil {
-						log.Println("Error: ", err)
-					} else {
-						log.Printf("Response: %v\n", response)
-					}
-
-					return nil
+					return cliBlacklistAdd(ctx, client, c)
 				},
 			},
 			// команда удаления IP из черного списка
@@ -194,19 +149,7 @@ func main() {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					r := api.BlacklistRemoveRequest{
-						SubNet: &api.SubNet{
-							Ip:   c.String("ip"),
-							Mask: c.String("mask"),
-						},
-					}
-					if response, err := client.BlacklistRemove(ctx, &r); err != nil {
-						log.Println("Error: ", err)
-					} else {
-						log.Printf("Response: %v\n", response)
-					}
-
-					return nil
+					return cliBlacklistRemove(ctx, client, c)
 				},
 			},
 		},
@@ -226,4 +169,79 @@ func main() {
 		log.Println("Received system interrupt...")
 		cancel()
 	}()
+}
+
+func cliReset(ctx context.Context, client api.ApiServiceClient, c *cli.Context) error {
+	r := api.ResetRequest{Login: c.String("login"), Ip: c.String("ip")}
+	if response, err := client.Reset(ctx, &r); err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Printf("Response: %v\n", response)
+	}
+
+	return nil
+}
+
+func cliWhitelistAdd(ctx context.Context, client api.ApiServiceClient, c *cli.Context) error {
+	r := api.WhitelistAddRequest{
+		SubNet: &api.SubNet{
+			Ip:   c.String("ip"),
+			Mask: c.String("mask"),
+		},
+	}
+	if response, err := client.WhitelistAdd(ctx, &r); err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Printf("Response: %v\n", response)
+	}
+
+	return nil
+}
+
+func cliWhitelistRemove(ctx context.Context, client api.ApiServiceClient, c *cli.Context) error {
+	r := api.WhitelistRemoveRequest{
+		SubNet: &api.SubNet{
+			Ip:   c.String("ip"),
+			Mask: c.String("mask"),
+		},
+	}
+	if response, err := client.WhitelistRemove(ctx, &r); err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Printf("Response: %v\n", response)
+	}
+
+	return nil
+}
+
+func cliBlacklistAdd(ctx context.Context, client api.ApiServiceClient, c *cli.Context) error {
+	r := api.BlacklistAddRequest{
+		SubNet: &api.SubNet{
+			Ip:   c.String("ip"),
+			Mask: c.String("mask"),
+		},
+	}
+	if response, err := client.BlacklistAdd(ctx, &r); err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Printf("Response: %v\n", response)
+	}
+
+	return nil
+}
+
+func cliBlacklistRemove(ctx context.Context, client api.ApiServiceClient, c *cli.Context) error {
+	r := api.BlacklistRemoveRequest{
+		SubNet: &api.SubNet{
+			Ip:   c.String("ip"),
+			Mask: c.String("mask"),
+		},
+	}
+	if response, err := client.BlacklistRemove(ctx, &r); err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Printf("Response: %v\n", response)
+	}
+
+	return nil
 }
