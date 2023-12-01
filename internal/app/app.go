@@ -25,17 +25,17 @@ type Application interface {
 }
 
 type App struct {
-	loginLimiter *ratelimit.RateLimiter
-	passLimiter  *ratelimit.RateLimiter
-	IPLimiter    *ratelimit.RateLimiter
+	loginLimiter ratelimit.RateLimiter
+	passLimiter  ratelimit.RateLimiter
+	IPLimiter    ratelimit.RateLimiter
 	WhiteList    storage.SubNetStoragable
 	BlackList    storage.SubNetStoragable
 }
 
 func NewApp(ctx context.Context, storage *sqlstorage.Storage, config *config.Config) Application {
-	loginLimiter := ratelimit.NewRateLimiter(config.Limiter.Login.Interval, config.Limiter.Login.Limit, ctx.Done())
-	passLimiter := ratelimit.NewRateLimiter(config.Limiter.Pass.Interval, config.Limiter.Pass.Limit, ctx.Done())
-	IPLimiter := ratelimit.NewRateLimiter(config.Limiter.IP.Interval, config.Limiter.IP.Limit, ctx.Done())
+	loginLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.Login.Interval, config.Limiter.Login.Limit, ctx.Done())
+	passLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.Pass.Interval, config.Limiter.Pass.Limit, ctx.Done())
+	IPLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.IP.Interval, config.Limiter.IP.Limit, ctx.Done())
 	whiteList := sqlstorage.NewSubNetStorage(storage, WHITELIST)
 	blackList := sqlstorage.NewSubNetStorage(storage, BLACKLIST)
 
