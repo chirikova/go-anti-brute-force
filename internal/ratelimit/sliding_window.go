@@ -8,13 +8,14 @@ import (
 type window struct {
 	limit          int64
 	interval       time.Duration
-	mu             sync.RWMutex
+	mu             sync.Mutex
 	timestamps     []int64
 	lastAccessTime time.Time
 }
 
 func newWindow(limit int64, interval time.Duration) *window {
 	return &window{
+		mu:             sync.Mutex{},
 		limit:          limit,
 		interval:       interval,
 		timestamps:     make([]int64, 0, limit),

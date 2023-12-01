@@ -87,7 +87,7 @@ func TestSlidingWindowLimiter_Clean(t *testing.T) {
 		{
 			name: "Clean is successful",
 			fields: fields{
-				interval: time.Second * 5,
+				interval: time.Second * 1,
 				limit:    5,
 			},
 			args: args{
@@ -109,22 +109,20 @@ func TestSlidingWindowLimiter_Clean(t *testing.T) {
 				ok := limiter.Allow(key)
 				require.False(t, ok)
 			}
-
 			time.Sleep(tt.fields.interval)
 
 			limiter.Clean()
-
-			cancel()
 
 			for _, key := range tt.args.keys {
 				ok := limiter.Allow(key)
 				require.True(t, ok)
 			}
+			cancel()
 		})
 	}
 }
 
-func TestSlidingWindowLimiterCleanReset(t *testing.T) {
+func TestSlidingWindowLimiterReset(t *testing.T) {
 	defer goleak.VerifyNone(t)
 
 	type fields struct {

@@ -2,6 +2,7 @@ package ratelimit
 
 import (
 	"context"
+	"sync"
 	"time"
 )
 
@@ -12,7 +13,8 @@ type RateLimiter interface {
 }
 
 type SlidingWindowLimiter struct {
-	ctx      context.Context
+	ctx context.Context
+	sync.Mutex
 	buckets  map[string]*window
 	limit    int64
 	interval time.Duration
@@ -28,6 +30,7 @@ type SlidingWindowLimiter struct {
 func NewSlidingWindowLimiter(ctx context.Context, interval time.Duration, limit int64) RateLimiter {
 	limiter := &SlidingWindowLimiter{
 		ctx:      ctx,
+		Mutex:    sync.Mutex{},
 		buckets:  make(map[string]*window),
 		interval: interval,
 		limit:    limit,
@@ -48,6 +51,9 @@ func NewSlidingWindowLimiter(ctx context.Context, interval time.Duration, limit 
 }
 
 func (r *SlidingWindowLimiter) Allow(key string) bool {
+	r.Lock()
+	defer r.Unlock()
+
 	if _, ok := r.buckets[key]; !ok {
 		r.buckets[key] = newWindow(r.limit, r.interval)
 	}
@@ -62,10 +68,16 @@ func (r *SlidingWindowLimiter) Allow(key string) bool {
 }
 
 func (r *SlidingWindowLimiter) Reset(key string) {
+	r.Lock()
+	defer r.Unlock()
+
 	delete(r.buckets, key)
 }
 
 func (r *SlidingWindowLimiter) Clean() {
+	r.Lock()
+	defer r.Unlock()
+
 	for key, bucket := range r.buckets {
 		if time.Since(bucket.lastAccessTime) > r.interval || bucket.size() == 0 {
 			delete(r.buckets, key)
