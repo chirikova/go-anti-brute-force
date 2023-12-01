@@ -1,6 +1,7 @@
 package ratelimit
 
 import (
+	"context"
 	"time"
 )
 
@@ -11,10 +12,10 @@ type RateLimiter interface {
 }
 
 type SlidingWindowLimiter struct {
+	ctx      context.Context
 	buckets  map[string]*window
 	limit    int64
 	interval time.Duration
-	cancelCh <-chan struct{}
 }
 
 // NewSlidingWindowLimiter
@@ -24,12 +25,12 @@ type SlidingWindowLimiter struct {
 // It does this by continuously tracking requests
 // and maintaining a "sliding window" that moves forward as time progresses,
 // ensuring that request counts are always up-to-date.
-func NewSlidingWindowLimiter(interval time.Duration, limit int64, cancelCh <-chan struct{}) RateLimiter {
+func NewSlidingWindowLimiter(ctx context.Context, interval time.Duration, limit int64) RateLimiter {
 	limiter := &SlidingWindowLimiter{
+		ctx:      ctx,
 		buckets:  make(map[string]*window),
 		interval: interval,
 		limit:    limit,
-		cancelCh: cancelCh,
 	}
 
 	go func() {
@@ -37,7 +38,7 @@ func NewSlidingWindowLimiter(interval time.Duration, limit int64, cancelCh <-cha
 			select {
 			case <-time.After(interval):
 				limiter.Clean()
-			case <-cancelCh:
+			case <-ctx.Done():
 				return
 			}
 		}

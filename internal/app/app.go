@@ -33,9 +33,9 @@ type App struct {
 }
 
 func NewApp(ctx context.Context, storage *sqlstorage.Storage, config *config.Config) Application {
-	loginLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.Login.Interval, config.Limiter.Login.Limit, ctx.Done())
-	passLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.Pass.Interval, config.Limiter.Pass.Limit, ctx.Done())
-	IPLimiter := ratelimit.NewSlidingWindowLimiter(config.Limiter.IP.Interval, config.Limiter.IP.Limit, ctx.Done())
+	loginLimiter := ratelimit.NewSlidingWindowLimiter(ctx, config.Limiter.Login.Interval, config.Limiter.Login.Limit)
+	passLimiter := ratelimit.NewSlidingWindowLimiter(ctx, config.Limiter.Pass.Interval, config.Limiter.Pass.Limit)
+	IPLimiter := ratelimit.NewSlidingWindowLimiter(ctx, config.Limiter.IP.Interval, config.Limiter.IP.Limit)
 	whiteList := sqlstorage.NewSubNetStorage(storage, WHITELIST)
 	blackList := sqlstorage.NewSubNetStorage(storage, BLACKLIST)
 
