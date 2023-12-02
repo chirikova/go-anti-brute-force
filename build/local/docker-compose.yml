@@ -5,6 +5,8 @@ services:
     build:
       context: ../..
       dockerfile: ./build/app/Dockerfile
+      args:
+        CONFIG_FILE: ./configs/config.yaml
     ports:
       - 9095:9095
     networks:

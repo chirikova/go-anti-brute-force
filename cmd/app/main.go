@@ -23,6 +23,8 @@ func init() {
 }
 
 func main() {
+	flag.Parse()
+
 	// инициализируем конфиги
 	cfg, err := config.InitConfig(configFile)
 	if err != nil {
