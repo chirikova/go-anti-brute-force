@@ -17,9 +17,11 @@ RUN CGO_ENABLED=0 \
 
 
 FROM alpine
+ARG CONFIG_FILE
+ENV CONFIG_FILE=$CONFIG_FILE
 ENV NAME "app"
 WORKDIR /out/${NAME}
 COPY --from=build /out/${NAME}/configs ./configs
 COPY --from=build /out/${NAME}/bin/${NAME} ./${NAME}
 RUN apk add --no-cache tzdata
-CMD ./${NAME} --config=./configs/config.yaml
+CMD ./${NAME} -config ${CONFIG_FILE}

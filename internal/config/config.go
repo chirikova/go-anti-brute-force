@@ -4,14 +4,20 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
-	Logger Logger
-	DB     DB
-	GRPC   GRPC
+	Logger  Logger
+	DB      DB
+	GRPC    GRPC
+	Limiter struct {
+		Login Limit
+		Pass  Limit
+		IP    Limit
+	}
 }
 
 type Logger struct {
@@ -30,6 +36,11 @@ type DB struct {
 type GRPC struct {
 	Host string
 	Port string
+}
+
+type Limit struct {
+	Limit    int64
+	Interval time.Duration
 }
 
 func InitConfig(configFile string) (*Config, error) {
@@ -62,7 +73,7 @@ func New(file *os.File) (*Config, error) {
 
 func (db *DB) BuildDSN() string {
 	dsn := fmt.Sprintf(
-		"postgres://%s:%s@%s:%v/%s?sslmode=disable",
+		"postgres://%v:%v@%v:%v/%v?sslmode=disable",
 		db.User,
 		db.Password,
 		db.Host,

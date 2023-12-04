@@ -19,7 +19,7 @@ type Server struct {
 	ctx    context.Context
 }
 
-func NewServer(ctx context.Context, config config.GRPC, logger logger.Logger, app *app.Application) *Server {
+func NewServer(ctx context.Context, config config.GRPC, logger logger.Logger, app app.Application) *Server {
 	apiService := NewService(app)
 	server := grpc.NewServer(grpc.UnaryInterceptor(loggingMiddleware(logger)))
 	api.RegisterApiServiceServer(server, apiService)

@@ -3,7 +3,7 @@ run:
 
 linters-settings:
   funlen:
-    lines: 250
+    lines: 150
     statements: 80
 
 linters:
@@ -11,6 +11,7 @@ linters:
   enable:
     - asciicheck
     - bodyclose
+    - deadcode
     - dogsled
     - dupl
     - durationcheck
@@ -27,10 +28,13 @@ linters:
     - gofmt
     - gofumpt
     - goheader
+    - gomoddirectives
+    - gomodguard
     - goprintffuncname
     - gosec
     - gosimple
     - govet
+    - ifshort
     - importas
     - ineffassign
     - lll
@@ -43,12 +47,18 @@ linters:
     - prealloc
     - predeclared
     - revive
+    - rowserrcheck
+    - sqlclosecheck
     - staticcheck
+    - structcheck
     - stylecheck
     - tagliatelle
     - thelper
+    - tparallel
     - typecheck
     - unconvert
     - unparam
     - unused
+    - varcheck
+    - wastedassign
     - whitespace

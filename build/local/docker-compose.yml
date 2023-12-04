@@ -5,6 +5,8 @@ services:
     build:
       context: ../..
       dockerfile: ./build/app/Dockerfile
+      args:
+        CONFIG_FILE: ./configs/config.yaml
     ports:
       - 9095:9095
     networks:
@@ -14,14 +16,15 @@ services:
     restart: on-failure
   psql:
     image: "postgres"
+    build:
+      context: ../..
+      dockerfile: ./build/app/Dockerfile-db
     environment:
       - POSTGRES_USER=antibruteforce
       - POSTGRES_PASSWORD=antibruteforce
       - POSTGRES_DB=antibruteforce
     ports:
       - "54320:5432"
-    volumes:
-      - ../../build/migrations/:/docker-entrypoint-initdb.d/
     networks:
       - db
 networks:

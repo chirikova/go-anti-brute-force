@@ -13,10 +13,6 @@ service ApiService {
   rpc WhitelistRemove (WhitelistRemoveRequest) returns (WhitelistRemoveResponse) {}
 }
 
-message BaseResponse {
-  string data = 1;
-}
-
 message AuthRequest {
   string login = 1;
   string password = 2;
@@ -45,30 +41,22 @@ message BlacklistAddRequest {
   SubNet sub_net = 1;
 }
 
-message BlacklistAddResponse {
-  BaseResponse data = 1;
-}
+message BlacklistAddResponse {}
 
 message BlacklistRemoveRequest {
   SubNet sub_net = 1;
 }
 
-message BlacklistRemoveResponse {
-  BaseResponse data = 1;
-}
+message BlacklistRemoveResponse {}
 
 message WhitelistAddRequest {
   SubNet sub_net = 1;
 }
 
-message WhitelistAddResponse {
-  BaseResponse data = 1;
-}
+message WhitelistAddResponse {}
 
 message WhitelistRemoveRequest {
   SubNet sub_net = 1;
 }
 
-message WhitelistRemoveResponse {
-  BaseResponse data = 1;
-}
+message WhitelistRemoveResponse {}

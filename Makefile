@@ -16,22 +16,22 @@ test:
 lint:
 	golangci-lint run ./...
 
-build:
+build-dev:
 	go build -o $(BIN_APP) $(CMD_APP_PATH)/main.go
 
-run: build
+run-dev: build
 	$(BIN_APP) -config ./configs/config.yaml
+
+build:
+	docker-compose -f ${DOCKER_COMPOSE} up -d --build
+
+run: build
+	docker-compose -f ${DOCKER_COMPOSE} up
+
+down:
+	docker-compose -f ${DOCKER_COMPOSE} down
 
 build-admin:
 	go build -o $(BIN_ADMIN) $(CMD_ADMIN_PATH)/main.go
 
-docker-build:
-	docker-compose -f ${DOCKER_COMPOSE} up -d --build
-
-docker-up: docker-build
-	docker-compose -f ${DOCKER_COMPOSE} up
-
-docker-down:
-	docker-compose -f ${DOCKER_COMPOSE} down
-
-.PHONY: generate test lint build build-admin run run-admin docker-build docker-up docker-down
+.PHONY: generate test lint build build-dev build-admin runbuild-dev run-admin docker-build docker-down
