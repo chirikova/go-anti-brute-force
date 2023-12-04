@@ -25,7 +25,7 @@ run-dev: build
 build:
 	docker-compose -f ${DOCKER_COMPOSE} up -d --build
 
-run:
+run: build
 	docker-compose -f ${DOCKER_COMPOSE} up
 
 down:
