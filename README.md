@@ -34,7 +34,6 @@ make build
 ```shell
 make run
 ```
-```
 Удаление контейнеров:
 ```shell
 make down
